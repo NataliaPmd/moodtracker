@@ -1,6 +1,6 @@
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useFirstLaunch } from "@/hooks/use-first-launch";
@@ -33,9 +33,15 @@ export default function WelcomeScreen() {
       <View style={[styles.buttonContainer, { paddingBottom: insets.bottom + 32 }]}>
         <Pressable
           onPress={handleContinue}
-          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          style={({ pressed }) => [pressed && styles.buttonPressed]}
         >
-          <Text style={styles.buttonText}>Continue</Text>
+          <ImageBackground
+            source={require("../assets/images/button.png")}
+            style={styles.button}
+            resizeMode="contain"
+          >
+            <Text style={styles.buttonText}>Let's go!</Text>
+          </ImageBackground>
         </Pressable>
       </View>
     </View>
@@ -53,17 +59,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    backgroundColor: "#fbdcea",
-    paddingHorizontal: 48,
-    paddingVertical: 14,
-    borderRadius: 100,
+    width: 300,
+    height: 100,
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonPressed: {
     opacity: 0.8,
   },
   buttonText: {
-    fontFamily: "PatrickHand_400Regular",
-    fontSize: 18,
+    fontFamily: "AmaticSC_700Bold",
+    fontSize: 28,
     color: "#88566C",
   },
 });

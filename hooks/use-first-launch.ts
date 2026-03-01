@@ -7,8 +7,11 @@ export function useFirstLaunch() {
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
 
   useEffect(() => {
-    AsyncStorage.getItem(FIRST_LAUNCH_KEY).then((value) => {
-      setIsFirstLaunch(value === null);
+    // DEBUG ONLY — remove before shipping
+    AsyncStorage.removeItem(FIRST_LAUNCH_KEY).then(() => {
+      AsyncStorage.getItem(FIRST_LAUNCH_KEY).then((value) => {
+        setIsFirstLaunch(value === null);
+      });
     });
   }, []);
 
