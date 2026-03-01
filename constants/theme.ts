@@ -1,53 +1,42 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-import { Platform } from 'react-native';
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Design tokens for the Mood Tracker app
 
 export const Colors = {
+  // Brand palette
+  primary: "#fbdcea",  // soft pink — backgrounds, cards
+  accent: "#88566C",   // mauve — interactive elements, icons, tint
+  white: "#ffffff",
+
+  // Semantic colors per color scheme
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    background: "#ffffff",
+    surface: "#fbdcea",
+    text: "#88566C",
+    textMuted: "#88566caa",
+    tint: "#88566C",
+    icon: "#88566C",
+    tabIconDefault: "#88566caa",
+    tabIconSelected: "#88566C",
+    border: "#88566c33",
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    background: "#2a1520",
+    surface: "#3d2030",
+    text: "#fbdcea",
+    textMuted: "#fbdceaaa",
+    tint: "#fbdcea",
+    icon: "#fbdcea",
+    tabIconDefault: "#fbdceaaa",
+    tabIconSelected: "#fbdcea",
+    border: "#fbdcea33",
   },
-};
+} as const;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
-});
+// Font family names — must match the keys passed to useFonts() in _layout.tsx
+export const Fonts = {
+  heading: "AmaticSC_700Bold",          // titles, screen headers
+  headingRegular: "AmaticSC_400Regular",
+  body: "PatrickHand_400Regular",        // body text, labels, inputs
+} as const;
+
+export type ColorScheme = "light" | "dark";
+export type ThemeColors = typeof Colors.light;
