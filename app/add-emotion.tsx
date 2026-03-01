@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export default function AddEmotionScreen() {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Add Emotion</Text>
+      <Text>{t('addEmotion.title')}</Text>
     </View>
   );
 }

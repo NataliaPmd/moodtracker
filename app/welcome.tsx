@@ -2,6 +2,7 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { useRouter } from "expo-router";
 import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 import { useFirstLaunch } from "@/hooks/use-first-launch";
 
@@ -11,6 +12,7 @@ export default function WelcomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { markWelcomeSeen } = useFirstLaunch();
+  const { t } = useTranslation();
 
   const player = useVideoPlayer(videoSource, (p) => {
     p.loop = true;
@@ -40,7 +42,7 @@ export default function WelcomeScreen() {
             style={styles.button}
             resizeMode="contain"
           >
-            <Text style={styles.buttonText}>Let's go!</Text>
+            <Text style={styles.buttonText}>{t('welcome.cta')}</Text>
           </ImageBackground>
         </Pressable>
       </View>

@@ -1,0 +1,21 @@
+{
+  "tabs": {
+    "home": "Home",
+    "log": "Log",
+    "calendar": "Calendar",
+    "stats": "Stats"
+  },
+  "addEmotion": {
+    "title": "Add Emotion"
+  },
+  "welcome": {
+    "cta": "Let's go!"
+  },
+  "home": {
+    "greeting": "Hello there!",
+    "moodPrompt": "How are you feeling today?",
+    "last7Days": "Your Last 7 Days",
+    "weeklyTitle": "This Week's Mood",
+    "weeklyMessage": "You've been feeling mostly happy and energetic! Keep up the positive vibes! 💗"
+  }
+}

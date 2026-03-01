@@ -1,0 +1,21 @@
+{
+  "tabs": {
+    "home": "Inicio",
+    "log": "Registro",
+    "calendar": "Calendario",
+    "stats": "Estadísticas"
+  },
+  "addEmotion": {
+    "title": "Añadir emoción"
+  },
+  "welcome": {
+    "cta": "¡Vamos!"
+  },
+  "home": {
+    "greeting": "¡Hola!",
+    "moodPrompt": "¿Cómo te sientes hoy?",
+    "last7Days": "Tus últimos 7 días",
+    "weeklyTitle": "Tu estado de esta semana",
+    "weeklyMessage": "¡Te has sentido principalmente feliz y llena de energía! ¡Sigue con las buenas vibras! 💗"
+  }
+}

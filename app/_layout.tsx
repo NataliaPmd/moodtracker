@@ -1,4 +1,5 @@
 import "../global.css";
+import "../i18n";
 
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { AmaticSC_400Regular, AmaticSC_700Bold } from "@expo-google-fonts/amatic-sc";
@@ -9,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useFirstLaunch } from "@/hooks/use-first-launch";
@@ -22,6 +24,7 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const router = useRouter();
+  const { t } = useTranslation();
   const [fontsLoaded] = useFonts({
     AmaticSC_400Regular,
     AmaticSC_700Bold,
@@ -48,7 +51,7 @@ export default function RootLayout() {
         <Stack.Screen name="welcome" options={{ headerShown: false }} />
         <Stack.Screen
           name="add-emotion"
-          options={{ presentation: "modal", title: "Add Emotion" }}
+          options={{ presentation: "modal", title: t("addEmotion.title") }}
         />
       </Stack>
       <StatusBar style="auto" />
