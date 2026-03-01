@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function AddEmotionScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Add Emotion</Text>
     </View>
   );
 }

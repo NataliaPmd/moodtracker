@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function LogScreen() {
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Log</Text>
     </View>
   );
 }
