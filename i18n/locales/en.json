@@ -6,7 +6,21 @@
     "stats": "Stats"
   },
   "addEmotion": {
-    "title": "Add Emotion"
+    "title": "Add Emotion",
+    "screenTitle": "New Entry",
+    "screenSubtitle": "How are you feeling?",
+    "pickMood": "Pick your mood",
+    "notesTitle": "Your thoughts...",
+    "notesPlaceholder": "Write about your day... What made you feel this way? Any highlights or challenges?",
+    "saveButton": "Save Entry",
+    "moods": {
+      "sad": "Sad",
+      "tired": "Tired",
+      "angry": "Angry",
+      "happy": "Happy",
+      "motivated": "Motivated",
+      "calm": "Calm"
+    }
   },
   "welcome": {
     "cta": "Let's go!"

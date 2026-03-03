@@ -3,6 +3,6 @@ const { withNativeWind } = require("nativewind/metro");
 
 const config = getDefaultConfig(__dirname);
 
-config.resolver.assetExts.push("MP4");
+config.resolver.assetExts.push("MP4", "PNG");
 
 module.exports = withNativeWind(config, { input: "./global.css" });

@@ -6,7 +6,21 @@
     "stats": "Estadísticas"
   },
   "addEmotion": {
-    "title": "Añadir emoción"
+    "title": "Añadir emoción",
+    "screenTitle": "Nueva entrada",
+    "screenSubtitle": "¿Cómo te sientes?",
+    "pickMood": "Elige tu estado de ánimo",
+    "notesTitle": "Tus pensamientos...",
+    "notesPlaceholder": "Escribe sobre tu día... ¿Qué te hizo sentir así? ¿Aspectos destacados o desafíos?",
+    "saveButton": "Guardar entrada",
+    "moods": {
+      "sad": "Triste",
+      "tired": "Cansado",
+      "angry": "Enfadado",
+      "happy": "Alegre",
+      "motivated": "Motivado",
+      "calm": "Calmado"
+    }
   },
   "welcome": {
     "cta": "¡Vamos!"
