@@ -25,6 +25,12 @@
   "welcome": {
     "cta": "¡Vamos!"
   },
+  "log": {
+    "title": "Registro de ánimo",
+    "subtitle": "Tus entradas recientes",
+    "today": "Hoy",
+    "empty": "Aún no hay entradas. ¡Empieza añadiendo tu primer estado de ánimo!"
+  },
   "home": {
     "greeting": "¡Hola!",
     "moodPrompt": "¿Cómo te sientes hoy?",

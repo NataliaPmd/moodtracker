@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,9 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { router } from 'expo-router';
-import { XIcon, HeartIcon } from 'phosphor-react-native';
-import { saveEntry } from '../hooks/use-emotion-storage';
+import { router, useLocalSearchParams } from 'expo-router';
+import { HeartIcon } from 'phosphor-react-native';
+import { saveEntry, getEntry } from '../hooks/use-emotion-storage';
 import { IconSymbol } from '../components/ui/icon-symbol';
 
 const MOODS = [
@@ -63,14 +63,32 @@ const MAX_CHARS = 300;
 const ACCENT = '#88566C';
 
 export default function AddEmotionScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { date: dateParam } = useLocalSearchParams<{ date?: string }>();
+  const entryDate = Array.isArray(dateParam) ? dateParam[0] : (dateParam ?? new Date().toISOString().split('T')[0]);
+
+  const displayDate = new Date(entryDate + 'T00:00:00').toLocaleDateString(i18n.language, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
   const [selectedMood, setSelectedMood] = useState<MoodId>('happy');
   const [note, setNote] = useState('');
+
+  useEffect(() => {
+    getEntry(entryDate).then((existing) => {
+      if (existing) {
+        setSelectedMood(existing.mood as MoodId);
+        setNote(existing.note ?? '');
+      }
+    });
+  }, [entryDate]);
 
   async function handleSave() {
     const mood = MOODS.find((m) => m.id === selectedMood)!;
     await saveEntry({
-      date: new Date().toISOString().split('T')[0],
+      date: entryDate,
       mood: selectedMood,
       color: mood.color,
       note: note.trim() || undefined,
@@ -90,22 +108,13 @@ export default function AddEmotionScreen() {
           keyboardShouldPersistTaps="handled"
         >
           {/* Header */}
-          <View className="flex-row items-start justify-between w-full">
-            <View style={styles.titleSection}>
-              <Text className="font-heading text-accent" style={styles.screenTitle}>
-                {t('addEmotion.screenTitle')}
-              </Text>
-              <Text className="font-body text-accent text-base">
-                {t('addEmotion.screenSubtitle')}
-              </Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.closeButton}
-              hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
-            >
-              <IconSymbol icon={XIcon} size={24} color={ACCENT} />
-            </TouchableOpacity>
+          <View style={{ gap: 2 }}>
+            <Text className="font-heading text-accent text-2xl">
+              {t('addEmotion.screenSubtitle')}
+            </Text>
+            <Text className="font-body text-accent capitalize" style={{ fontSize: 15 }}>
+              {displayDate}
+            </Text>
           </View>
 
           {/* Mood Selection Card */}
@@ -205,15 +214,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 32,
     gap: 23,
-  },
-  titleSection: { flex: 1, gap: 4 },
-  screenTitle: { fontSize: 36 },
-  closeButton: {
-    width: 32,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 4,
   },
   card: {
     backgroundColor: '#ffffff',

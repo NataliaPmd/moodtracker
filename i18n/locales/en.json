@@ -25,6 +25,12 @@
   "welcome": {
     "cta": "Let's go!"
   },
+  "log": {
+    "title": "Mood Log",
+    "subtitle": "Your recent entries",
+    "today": "Today",
+    "empty": "No entries yet. Start by adding your first mood!"
+  },
   "home": {
     "greeting": "Hello there!",
     "moodPrompt": "How are you feeling today?",

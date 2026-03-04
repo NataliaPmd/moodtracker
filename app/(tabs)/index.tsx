@@ -1,11 +1,38 @@
+import { useCallback } from 'react';
 import { Image, ImageBackground, Pressable, ScrollView, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { useEmotions } from '../../hooks/use-emotions';
+
+// require() must be static in RN — pre-declare all square images
+const SQUARE_EMPTY = require('../../assets/images/squares/squareempty.png');
+const COLOR_TO_SQUARE: Record<string, ReturnType<typeof require>> = {
+  '#9E9E9E': require('../../assets/images/squares/grey-square.PNG'),
+  '#90CAF9': require('../../assets/images/squares/blue-square.PNG'),
+  '#FFAB76': require('../../assets/images/squares/orange-square.PNG'),
+  '#F9A8D4': require('../../assets/images/squares/pink-square.PNG'),
+  '#86EFAC': require('../../assets/images/squares/green-square.PNG'),
+  '#C4B5FD': require('../../assets/images/squares/purple-square.PNG'),
+};
+
+function getLast7Days(): string[] {
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    return d.toISOString().split('T')[0];
+  });
+}
 
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const { entries, refresh } = useEmotions();
+
+  useFocusEffect(useCallback(() => { refresh(); }, [refresh]));
+
+  const last7Days = getLast7Days();
+  const entriesByDate = Object.fromEntries(entries.map((e) => [e.date, e]));
 
   const today = new Date();
   const dateStr = today.toLocaleDateString(i18n.language, {
@@ -51,14 +78,19 @@ export default function HomeScreen() {
             {t('home.last7Days')}
           </Text>
           <View className="flex-row gap-4 items-center">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <Image
-                key={i}
-                source={require('../../assets/images/squares/squareempty.png')}
-                style={{ flex: 1, aspectRatio: 1 }}
-                resizeMode="cover"
-              />
-            ))}
+            {last7Days.map((date) => {
+              const entry = entriesByDate[date];
+              const source = entry ? (COLOR_TO_SQUARE[entry.color] ?? SQUARE_EMPTY) : SQUARE_EMPTY;
+              return (
+                <Pressable
+                  key={date}
+                  style={{ flex: 1, aspectRatio: 1 }}
+                  onPress={() => router.push({ pathname: '/add-emotion', params: { date } })}
+                >
+                  <Image source={source} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+                </Pressable>
+              );
+            })}
           </View>
         </View>
 

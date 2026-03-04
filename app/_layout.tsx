@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useFirstLaunch } from "@/hooks/use-first-launch";
+import { Colors, Fonts } from "@/constants/theme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,7 +52,14 @@ export default function RootLayout() {
         <Stack.Screen name="welcome" options={{ headerShown: false }} />
         <Stack.Screen
           name="add-emotion"
-          options={{ presentation: "modal", title: t("addEmotion.title") }}
+          options={{
+            presentation: "modal",
+            title: t("addEmotion.screenTitle"),
+            headerStyle: { backgroundColor: Colors.primary },
+            headerTitleStyle: { fontFamily: Fonts.heading, fontSize: 36 },
+            headerTintColor: Colors.accent,
+            headerShadowVisible: false,
+          }}
         />
       </Stack>
       <StatusBar style="auto" />

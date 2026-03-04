@@ -5,6 +5,7 @@ import { deleteEntry, getAllEntries, getEntry, saveEntry } from './use-emotion-s
 interface UseEmotionsReturn {
   entries: EmotionEntry[];
   loading: boolean;
+  refresh: () => Promise<void>;
   save: (entry: EmotionEntry) => Promise<void>;
   remove: (date: string) => Promise<void>;
   getByDate: (date: string) => Promise<EmotionEntry | null>;
@@ -13,6 +14,10 @@ interface UseEmotionsReturn {
 export function useEmotions(): UseEmotionsReturn {
   const [entries, setEntries] = useState<EmotionEntry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setEntries(await getAllEntries());
+  }, []);
 
   useEffect(() => {
     getAllEntries()
@@ -32,5 +37,5 @@ export function useEmotions(): UseEmotionsReturn {
 
   const getByDate = useCallback((date: string) => getEntry(date), []);
 
-  return { entries, loading, save, remove, getByDate };
+  return { entries, loading, refresh, save, remove, getByDate };
 }
