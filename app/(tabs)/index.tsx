@@ -5,25 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { MoodMotivation } from '../../components/MoodMotivation';
 import { useEmotions } from '../../hooks/use-emotions';
+import { COLOR_TO_CIRCLE, COLOR_TO_SQUARE } from '../../constants/moods';
 
-// require() must be static in RN — pre-declare all square/circle images
 const SQUARE_EMPTY = require('../../assets/images/squares/squareempty.png');
-const COLOR_TO_SQUARE: Record<string, ReturnType<typeof require>> = {
-  '#9E9E9E': require('../../assets/images/squares/grey-square.PNG'),
-  '#90CAF9': require('../../assets/images/squares/blue-square.PNG'),
-  '#FFAB76': require('../../assets/images/squares/orange-square.PNG'),
-  '#F9A8D4': require('../../assets/images/squares/pink-square.PNG'),
-  '#86EFAC': require('../../assets/images/squares/green-square.PNG'),
-  '#C4B5FD': require('../../assets/images/squares/purple-square.PNG'),
-};
-const COLOR_TO_CIRCLE: Record<string, ReturnType<typeof require>> = {
-  '#9E9E9E': require('../../assets/images/circles/grey-circle.PNG'),
-  '#90CAF9': require('../../assets/images/circles/blue-circle.PNG'),
-  '#FFAB76': require('../../assets/images/circles/orange-circle.PNG'),
-  '#F9A8D4': require('../../assets/images/circles/pink-circle.PNG'),
-  '#86EFAC': require('../../assets/images/circles/green-circle.PNG'),
-  '#C4B5FD': require('../../assets/images/circles/purple-circle.PNG'),
-};
 
 function getLast7Days(): string[] {
   return Array.from({ length: 7 }, (_, i) => {

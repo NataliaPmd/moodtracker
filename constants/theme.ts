@@ -29,6 +29,13 @@ export const Colors = {
     tabIconSelected: "#fbdcea",
     border: "#fbdcea33",
   },
+  // UI-specific tokens not tied to color scheme
+  tabBar: {
+    background: "#fff7fa",
+    border: "#f0d4e0",
+  },
+  placeholder: "#c4a0b2",  // text input placeholder & char counter
+  barLabel: "#7a7a7a",     // stats bar chart labels
 } as const;
 
 // Font family names — must match the keys passed to useFonts() in _layout.tsx

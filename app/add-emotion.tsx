@@ -2,14 +2,12 @@ import { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  Image,
   TextInput,
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  ImageSourcePropType,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -17,50 +15,12 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { HeartIcon } from 'phosphor-react-native';
 import { saveEntry, getEntry } from '../hooks/use-emotion-storage';
 import { IconSymbol } from '../components/ui/icon-symbol';
-
-const MOODS = [
-  {
-    id: 'sad',
-    labelKey: 'addEmotion.moods.sad',
-    image: require('../assets/images/circles/grey-circle.PNG') as ImageSourcePropType,
-    color: '#9E9E9E',
-  },
-  {
-    id: 'tired',
-    labelKey: 'addEmotion.moods.tired',
-    image: require('../assets/images/circles/blue-circle.PNG') as ImageSourcePropType,
-    color: '#90CAF9',
-  },
-  {
-    id: 'angry',
-    labelKey: 'addEmotion.moods.angry',
-    image: require('../assets/images/circles/orange-circle.PNG') as ImageSourcePropType,
-    color: '#FFAB76',
-  },
-  {
-    id: 'happy',
-    labelKey: 'addEmotion.moods.happy',
-    image: require('../assets/images/circles/pink-circle.PNG') as ImageSourcePropType,
-    color: '#F9A8D4',
-  },
-  {
-    id: 'motivated',
-    labelKey: 'addEmotion.moods.motivated',
-    image: require('../assets/images/circles/green-circle.PNG') as ImageSourcePropType,
-    color: '#86EFAC',
-  },
-  {
-    id: 'calm',
-    labelKey: 'addEmotion.moods.calm',
-    image: require('../assets/images/circles/purple-circle.PNG') as ImageSourcePropType,
-    color: '#C4B5FD',
-  },
-] as const;
-
-type MoodId = (typeof MOODS)[number]['id'];
+import { MoodOption } from '../components/MoodOption';
+import { MOODS, MOOD_BY_ID } from '../constants/moods';
+import { MoodId } from '../types';
+import { Colors, Fonts } from '../constants/theme';
 
 const MAX_CHARS = 300;
-const ACCENT = '#88566C';
 
 export default function AddEmotionScreen() {
   const { t, i18n } = useTranslation();
@@ -79,14 +39,14 @@ export default function AddEmotionScreen() {
   useEffect(() => {
     getEntry(entryDate).then((existing) => {
       if (existing) {
-        setSelectedMood(existing.mood as MoodId);
+        setSelectedMood(existing.mood);
         setNote(existing.note ?? '');
       }
     });
   }, [entryDate]);
 
   async function handleSave() {
-    const mood = MOODS.find((m) => m.id === selectedMood)!;
+    const mood = MOOD_BY_ID[selectedMood];
     await saveEntry({
       date: entryDate,
       mood: selectedMood,
@@ -126,7 +86,7 @@ export default function AddEmotionScreen() {
               {MOODS.slice(0, 3).map((mood) => (
                 <MoodOption
                   key={mood.id}
-                  image={mood.image}
+                  image={mood.circle}
                   label={t(mood.labelKey)}
                   isSelected={selectedMood === mood.id}
                   onPress={() => setSelectedMood(mood.id)}
@@ -137,7 +97,7 @@ export default function AddEmotionScreen() {
               {MOODS.slice(3, 6).map((mood) => (
                 <MoodOption
                   key={mood.id}
-                  image={mood.image}
+                  image={mood.circle}
                   label={t(mood.labelKey)}
                   isSelected={selectedMood === mood.id}
                   onPress={() => setSelectedMood(mood.id)}
@@ -155,7 +115,7 @@ export default function AddEmotionScreen() {
               <TextInput
                 style={styles.textInput}
                 placeholder={t('addEmotion.notesPlaceholder')}
-                placeholderTextColor="#c4a0b2"
+                placeholderTextColor={Colors.placeholder}
                 multiline
                 maxLength={MAX_CHARS}
                 value={note}
@@ -170,7 +130,7 @@ export default function AddEmotionScreen() {
 
           {/* Save Button */}
           <TouchableOpacity style={styles.saveButton} onPress={handleSave} activeOpacity={0.8}>
-            <IconSymbol icon={HeartIcon} size={20} color={ACCENT} />
+            <IconSymbol icon={HeartIcon} size={20} color={Colors.accent} />
             <Text className="font-heading text-accent" style={styles.saveButtonText}>
               {t('addEmotion.saveButton')}
             </Text>
@@ -178,32 +138,6 @@ export default function AddEmotionScreen() {
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
-  );
-}
-
-function MoodOption({
-  image,
-  label,
-  isSelected,
-  onPress,
-}: {
-  image: ImageSourcePropType;
-  label: string;
-  isSelected: boolean;
-  onPress: () => void;
-}) {
-  return (
-    <TouchableOpacity onPress={onPress} style={styles.moodOption} activeOpacity={0.7}>
-      <View style={[styles.circleContainer, isSelected && styles.circleSelected]}>
-        <Image source={image} style={styles.circleImage} />
-      </View>
-      <Text
-        className="font-body text-accent text-sm text-center"
-        style={isSelected ? styles.moodLabelSelected : undefined}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
   );
 }
 
@@ -216,7 +150,7 @@ const styles = StyleSheet.create({
     gap: 23,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 20,
     gap: 16,
@@ -227,48 +161,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
   },
-  moodOption: {
-    width: 90,
-    alignItems: 'center',
-    gap: 6,
-  },
-  circleContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    overflow: 'hidden',
-    borderWidth: 2.5,
-    borderColor: 'transparent',
-  },
-  circleSelected: {
-    borderColor: ACCENT,
-  },
-  circleImage: {
-    width: '100%',
-    height: '100%',
-  },
-  moodLabelSelected: { fontWeight: '700' },
   diarySection: { gap: 10, width: '100%' },
   diaryCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 20,
     height: 180,
   },
   textInput: {
     flex: 1,
-    fontFamily: 'PatrickHand_400Regular',
+    fontFamily: Fonts.body,
     fontSize: 14,
-    color: ACCENT,
+    color: Colors.accent,
     lineHeight: 22,
   },
   charCount: {
     textAlign: 'right',
     fontSize: 12,
-    color: '#c4a0b2',
+    color: Colors.placeholder,
   },
   saveButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     borderRadius: 20,
     height: 61,
     flexDirection: 'row',

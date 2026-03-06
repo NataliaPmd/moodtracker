@@ -4,26 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useFocusEffect } from 'expo-router';
 import { useEmotions } from '../../hooks/use-emotions';
+import { MOOD_SQUARES } from '../../constants/moods';
+import { MoodId } from '../../types';
 
 const YEAR = new Date().getFullYear();
 const TODAY = new Date().toISOString().split('T')[0];
-
-const MOOD_SQUARES: Record<string, ImageSourcePropType> = {
-  sad: require('../../assets/images/squares/grey-square.PNG'),
-  tired: require('../../assets/images/squares/blue-square.PNG'),
-  angry: require('../../assets/images/squares/orange-square.PNG'),
-  happy: require('../../assets/images/squares/pink-square.PNG'),
-  motivated: require('../../assets/images/squares/green-square.PNG'),
-  calm: require('../../assets/images/squares/purple-square.PNG'),
-};
-
 const EMPTY_SQUARE = require('../../assets/images/squares/squareempty.png') as ImageSourcePropType;
 
 function daysInMonth(month: number): number {
   return new Date(YEAR, month, 0).getDate();
 }
 
-const DayCell = memo(function DayCell({ mood, dateStr, cellSize }: { mood: string | undefined; dateStr: string; cellSize: number }) {
+const DayCell = memo(function DayCell({ mood, dateStr, cellSize }: { mood: MoodId | undefined; dateStr: string; cellSize: number }) {
   const isFuture = dateStr > TODAY;
   return (
     <TouchableOpacity
@@ -48,7 +40,7 @@ export default function CalendarScreen() {
   useFocusEffect(useCallback(() => { refresh(); }, []));
 
   const entriesMap = useMemo(() => {
-    const map: Record<string, string> = {};
+    const map: Record<string, MoodId> = {};
     for (const entry of entries) map[entry.date] = entry.mood;
     return map;
   }, [entries]);

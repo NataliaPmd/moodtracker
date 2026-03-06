@@ -1,16 +1,6 @@
 import { useMemo } from 'react';
 import { EmotionEntry } from '../types';
-
-const MOOD_COLORS: Record<string, string> = {
-  happy: '#F4CADA',
-  calm: '#caa4c1',
-  motivated: '#dce0bd',
-  tired: '#d6dffe',
-  sad: '#dcd3db',
-  angry: '#ffc79d',
-};
-
-const ALL_MOODS = Object.keys(MOOD_COLORS);
+import { MOODS } from '../constants/moods';
 
 export interface MoodStat {
   mood: string;
@@ -50,7 +40,7 @@ export function useStats(entries: EmotionEntry[]): Stats {
   return useMemo(() => {
     const total = entries.length;
     if (total === 0) {
-      const moodStats = ALL_MOODS.map((mood) => ({ mood, count: 0, color: MOOD_COLORS[mood], percentage: 0 }));
+      const moodStats = MOODS.map((m) => ({ mood: m.id, count: 0, color: m.chartColor, percentage: 0 }));
       return { total: 0, streak: 0, thisMonth: 0, topMood: null, moodStats };
     }
 
@@ -68,12 +58,12 @@ export function useStats(entries: EmotionEntry[]): Stats {
 
     const topMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
 
-    const moodStats: MoodStat[] = ALL_MOODS
-      .map((mood) => ({
-        mood,
-        count: counts[mood] ?? 0,
-        color: MOOD_COLORS[mood],
-        percentage: counts[mood] ? Math.round(((counts[mood] ?? 0) / total) * 100) : 0,
+    const moodStats: MoodStat[] = MOODS
+      .map((m) => ({
+        mood: m.id,
+        count: counts[m.id] ?? 0,
+        color: m.chartColor,
+        percentage: counts[m.id] ? Math.round(((counts[m.id] ?? 0) / total) * 100) : 0,
       }))
       .sort((a, b) => b.count - a.count);
 
