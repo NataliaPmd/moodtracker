@@ -31,9 +31,29 @@
     "today": "Hoy",
     "empty": "Aún no hay entradas. ¡Empieza añadiendo tu primer estado de ánimo!"
   },
+  "calendar": {
+    "screenTitle": "Calendario {{year}}",
+    "subtitle": "Tu año en colores"
+  },
+  "motivation": {
+    "happy": "Irradias buena energía — ¡sigue contagiando esa alegría!",
+    "calm": "Tu paz interior es un auténtico superpoder. Cuídala.",
+    "motivated": "¡Eres imparable! Canaliza esa energía en algo grande.",
+    "tired": "Descansar también es productivo. Sé amable contigo hoy.",
+    "sad": "Está bien sentirse triste. Los días mejores ya están de camino.",
+    "angry": "Respira hondo. Tus sentimientos son válidos — déjalos pasar."
+  },
+  "stats": {
+    "title": "Tus estadísticas de ánimo",
+    "total": "Entradas totales",
+    "streak": "¡Días seguidos!",
+    "topMoodText": "{{mood}} – {{percentage}}% del tiempo",
+    "noEntries": "Aún no hay entradas. ¡Empieza a registrar tu ánimo!"
+  },
   "home": {
     "greeting": "¡Hola!",
     "moodPrompt": "¿Cómo te sientes hoy?",
+    "moodToday": "Hoy te sientes",
     "last7Days": "Tus últimos 7 días",
     "weeklyTitle": "Tu estado de esta semana",
     "weeklyMessage": "¡Te has sentido principalmente feliz y llena de energía! ¡Sigue con las buenas vibras! 💗"

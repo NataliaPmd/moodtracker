@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import { Image, ImageBackground, Pressable, ScrollView, Text, View } from 'react-native';
+import { Image, ImageBackground, ImageSourcePropType, Pressable, ScrollView, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { MoodMotivation } from '../../components/MoodMotivation';
 import { useEmotions } from '../../hooks/use-emotions';
 
-// require() must be static in RN — pre-declare all square images
+// require() must be static in RN — pre-declare all square/circle images
 const SQUARE_EMPTY = require('../../assets/images/squares/squareempty.png');
 const COLOR_TO_SQUARE: Record<string, ReturnType<typeof require>> = {
   '#9E9E9E': require('../../assets/images/squares/grey-square.PNG'),
@@ -14,6 +15,14 @@ const COLOR_TO_SQUARE: Record<string, ReturnType<typeof require>> = {
   '#F9A8D4': require('../../assets/images/squares/pink-square.PNG'),
   '#86EFAC': require('../../assets/images/squares/green-square.PNG'),
   '#C4B5FD': require('../../assets/images/squares/purple-square.PNG'),
+};
+const COLOR_TO_CIRCLE: Record<string, ReturnType<typeof require>> = {
+  '#9E9E9E': require('../../assets/images/circles/grey-circle.PNG'),
+  '#90CAF9': require('../../assets/images/circles/blue-circle.PNG'),
+  '#FFAB76': require('../../assets/images/circles/orange-circle.PNG'),
+  '#F9A8D4': require('../../assets/images/circles/pink-circle.PNG'),
+  '#86EFAC': require('../../assets/images/circles/green-circle.PNG'),
+  '#C4B5FD': require('../../assets/images/circles/purple-circle.PNG'),
 };
 
 function getLast7Days(): string[] {
@@ -33,6 +42,17 @@ export default function HomeScreen() {
 
   const last7Days = getLast7Days();
   const entriesByDate = Object.fromEntries(entries.map((e) => [e.date, e]));
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayEntry = entriesByDate[todayStr];
+
+  const weeklyTopMood = (() => {
+    const counts: Record<string, number> = {};
+    for (const date of last7Days) {
+      const mood = entriesByDate[date]?.mood;
+      if (mood) counts[mood] = (counts[mood] ?? 0) + 1;
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  })();
 
   const today = new Date();
   const dateStr = today.toLocaleDateString(i18n.language, {
@@ -66,9 +86,22 @@ export default function HomeScreen() {
             style={{ height: 150 }}
             className="justify-center items-center"
           >
-            <Text className="font-heading text-2xl text-accent text-center" style={{ fontFamily: 'AmaticSC_700Bold' }}>
-              {t('home.moodPrompt')}
-            </Text>
+            {todayEntry ? (
+              <View className="flex-row items-center gap-3 px-8">
+                <Image
+                  source={COLOR_TO_CIRCLE[todayEntry.color] as ImageSourcePropType}
+                  style={{ width: 40, height: 40 }}
+                  resizeMode="contain"
+                />
+                <Text className="font-heading text-2xl text-accent" style={{ fontFamily: 'AmaticSC_700Bold' }}>
+                  {t('home.moodToday')} {t(`addEmotion.moods.${todayEntry.mood}`)}
+                </Text>
+              </View>
+            ) : (
+              <Text className="font-heading text-2xl text-accent text-center" style={{ fontFamily: 'AmaticSC_700Bold' }}>
+                {t('home.moodPrompt')}
+              </Text>
+            )}
           </ImageBackground>
         </Pressable>
 
@@ -97,7 +130,7 @@ export default function HomeScreen() {
         {/* Weekly Summary */}
         <ImageBackground
           source={require('../../assets/images/conteinerdarkpink.png')}
-          style={{ height: 290 }}
+          style={{ height: 220 }}
           resizeMode="stretch"
           className="justify-end p-5 gap-3.5"
         >
@@ -109,9 +142,13 @@ export default function HomeScreen() {
           <Text className="font-heading text-[22px] text-accent text-center" style={{ fontFamily: 'AmaticSC_700Bold' }}>
             {t('home.weeklyTitle')}
           </Text>
-          <Text className="font-body text-base text-accent text-center" style={{ lineHeight: 22 }}>
-            {t('home.weeklyMessage')}
-          </Text>
+          {weeklyTopMood && (
+            <MoodMotivation
+              mood={weeklyTopMood}
+              className="font-body text-base text-accent text-center"
+              style={{ lineHeight: 22 }}
+            />
+          )}
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>

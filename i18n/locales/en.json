@@ -31,9 +31,29 @@
     "today": "Today",
     "empty": "No entries yet. Start by adding your first mood!"
   },
+  "calendar": {
+    "screenTitle": "Calendar {{year}}",
+    "subtitle": "Your year in colors"
+  },
+  "motivation": {
+    "happy": "You're radiating good energy — keep spreading that joy!",
+    "calm": "Your inner peace is a true superpower. Cherish it.",
+    "motivated": "You're unstoppable! Channel that drive into something great.",
+    "tired": "Rest is productive too. Be gentle with yourself today.",
+    "sad": "It's okay to feel blue. Brighter days are already on their way.",
+    "angry": "Take a breath. Your feelings are valid — let them pass."
+  },
+  "stats": {
+    "title": "Your Mood Stats",
+    "total": "Total Entries",
+    "streak": "Day Streak!",
+    "topMoodText": "{{mood}} – {{percentage}}% of the time!",
+    "noEntries": "No entries yet. Start tracking your mood!"
+  },
   "home": {
     "greeting": "Hello there!",
     "moodPrompt": "How are you feeling today?",
+    "moodToday": "Today you feel",
     "last7Days": "Your Last 7 Days",
     "weeklyTitle": "This Week's Mood",
     "weeklyMessage": "You've been feeling mostly happy and energetic! Keep up the positive vibes! 💗"
