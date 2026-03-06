@@ -7,8 +7,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
 } from 'react-native';
+import { styles } from './add-emotion.styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -18,7 +18,7 @@ import { IconSymbol } from '../components/ui/icon-symbol';
 import { MoodOption } from '../components/MoodOption';
 import { MOODS, MOOD_BY_ID } from '../constants/moods';
 import { MoodId } from '../types';
-import { Colors, Fonts } from '../constants/theme';
+import { Colors } from '../constants/theme';
 
 const MAX_CHARS = 300;
 
@@ -141,54 +141,3 @@ export default function AddEmotionScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  content: {
-    paddingTop: 20,
-    paddingHorizontal: 24,
-    paddingBottom: 32,
-    gap: 23,
-  },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    padding: 20,
-    gap: 16,
-    width: '100%',
-  },
-  moodRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  diarySection: { gap: 10, width: '100%' },
-  diaryCard: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    padding: 20,
-    height: 180,
-  },
-  textInput: {
-    flex: 1,
-    fontFamily: Fonts.body,
-    fontSize: 14,
-    color: Colors.accent,
-    lineHeight: 22,
-  },
-  charCount: {
-    textAlign: 'right',
-    fontSize: 12,
-    color: Colors.placeholder,
-  },
-  saveButton: {
-    backgroundColor: Colors.white,
-    borderRadius: 20,
-    height: 61,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    width: '100%',
-  },
-  saveButtonText: { fontSize: 24 },
-});

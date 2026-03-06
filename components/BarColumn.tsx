@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from '../constants/theme';
+import { Text, View } from 'react-native';
 import { MoodStat } from '../hooks/use-stats';
+import { styles } from './BarColumn.styles';
 
 const MAX_BAR_HEIGHT = 80;
 
@@ -20,20 +20,3 @@ export function BarColumn({ stat, label, maxCount }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  column: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 6,
-  },
-  bar: {
-    width: 28,
-    borderRadius: 8,
-  },
-  label: {
-    fontSize: 10,
-    color: Colors.barLabel,
-    fontFamily: 'PatrickHand_400Regular',
-    textAlign: 'center',
-  },
-});

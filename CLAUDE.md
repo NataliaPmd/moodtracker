@@ -17,6 +17,7 @@ Almacenamiento local (sin backend por ahora).
 ## Convenciones
 - Componentes funcionales siempre
 - Un componente por archivo
+- estilos en un fichero aparte
 - Nombrar archivos en PascalCase
 - Custom hooks para lógica de negocio, fuera de los componentes
 - Comentarios y código en inglés

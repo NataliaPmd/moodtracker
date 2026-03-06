@@ -1,6 +1,7 @@
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useRouter } from "expo-router";
-import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, Pressable, Text, View } from "react-native";
+import { styles } from "./welcome.styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
@@ -28,7 +29,7 @@ export default function WelcomeScreen() {
     <View style={styles.container}>
       <VideoView
         player={player}
-        style={StyleSheet.absoluteFill}
+        style={styles.videoView}
         contentFit="cover"
         nativeControls={false}
       />
@@ -50,28 +51,3 @@ export default function WelcomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
-  buttonContainer: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  button: {
-    width: 300,
-    height: 100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonPressed: {
-    opacity: 0.8,
-  },
-  buttonText: {
-    fontFamily: "AmaticSC_700Bold",
-    fontSize: 28,
-    color: "#88566C",
-  },
-});
