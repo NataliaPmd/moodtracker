@@ -108,4 +108,3 @@ function BarColumn({ stat, label, maxCount }: { stat: MoodStat; label: string; m
     </View>
   );
 }
-

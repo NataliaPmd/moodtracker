@@ -23,4 +23,3 @@ export function MoodOption({ image, label, isSelected, onPress }: Props) {
     </TouchableOpacity>
   );
 }
-

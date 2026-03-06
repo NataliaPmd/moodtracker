@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { MoodStat } from '../hooks/use-stats';
+import { MoodStat } from '../../hooks/use-stats';
 import { styles } from './BarColumn.styles';
 
 const MAX_BAR_HEIGHT = 80;
@@ -19,4 +19,3 @@ export function BarColumn({ stat, label, maxCount }: Props) {
     </View>
   );
 }
-

@@ -59,11 +59,10 @@ export function CustomTabBar({ state, navigation }: BottomTabBarProps) {
         activeOpacity={0.85}
       >
         <Image
-          source={require('../../assets/images/addbutton.png')}
+          source={require('../../../assets/images/addbutton.png')}
           style={styles.addButtonImage}
         />
       </TouchableOpacity>
     </View>
   );
 }
-
